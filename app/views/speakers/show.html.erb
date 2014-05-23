@@ -1,22 +1,57 @@
-<p><%= image_tag @speaker.image_url, :width => 150 %></p>
+<p><%= image_tag((@speaker.image_url.blank? ? 'egg.png' : @speaker.image_url), :width => 150) %></p>
 <p>
   <h1><%= @speaker.name %></h1>
 </p>
-<% if @speaker.twitter_handle %>
-<p><a href="https://twitter.com/<%=@speaker.twitter_handle%>" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow <%= @speaker.twitter_handle %></a></p>
-<p>
+<% unless @speaker.twitter_handle.blank? %>
+  <% @speaker.twitter_handle.split(',').each do |s| %>
+    <p>
+      <a href="https://twitter.com/<%=s.gsub(/\s+/, "")%>" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">
+        Follow <%= s.gsub(/\s+/, "") %>
+      </a>
+    </p>
+  <% end %>
 <% end %>
-<% if @speaker.website.present? %>
-  <strong>Website:</strong>
-  <%= link_to @speaker.website, @speaker.website %>
-<% end %>
-</p>
 
+<% if @speaker.company.present? %>
+  </p>
+    <strong>Company </strong>: <%= @speaker.company %>
+  </p>
+<% end %>
+
+<% if @speaker.website.present? %>
+  </p>
+    <strong>Personal/Company Website:</strong>
+    <%= link_to @speaker.website, @speaker.website %>
+  </p>
+<% end %>
+
+<% if @speaker.title.present? %>
+  </p>
+    <h2><%= @speaker.title %></h2>
+  </p>
+<% end %>
+
+<hr/>
+
+<% if @speaker.presentation_title.present? %>
+  <h3>
+    <%= @speaker.presentation_title %>
+  </h3>
+<% end %>
+
+<% unless @speaker.abstract.blank? %>
+<p>
+  <pre style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+<%= @speaker.abstract %>
+  </pre>
+</p>
+<% end %>
+
+<% unless @speaker.bio.blank? %>
 <p>
   <strong>Bio:</strong>
-  <blockquote>
-    <%= @speaker.bio %>
-  </blockquote>
+  <pre style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+<%= @speaker.bio %>
+  </pre>
 </p>
-
-<%= link_to 'Edit', edit_speaker_path(@speaker) %>
+<% end %>

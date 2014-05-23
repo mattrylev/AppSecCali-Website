@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AppSec California 2014 - Surf, Sand, and Security</title>
+  <title><%= @title || "AppSec California 2014 - Surf, Sand, and Security" %></title>
   <%= stylesheet_link_tag 'application' %>
   <!-- we send emails with sendgrid -->
   <meta name="twitter:widgets:csp" content="on">
@@ -34,20 +34,17 @@
           </button>
           <a class="brand" href="/">AppSec California 2014</a>
           <div class="nav-collapse collapse">
-
-
-
             <ul class="nav">
-              <li><%= link_to 'Speakers', speakers_path %></li>
-              <li><%= link_to 'Call For Papers/Training', cfp_speakers_path %></li>
-              <li><%= link_to 'Location', location_path %></li>
-              <li><%= link_to 'Training', training_path %></li>
-              <li><%= link_to 'Sponsorship Opportunities', sponsorship_path %></li>
-              <li><%= link_to 'Registration', registration_path %></li>
-              <li class="dropdown hidden-phone hidden-tablet">
+              <%= nav_link 'Schedule', schedule_path %>
+              <%= nav_link 'Speakers', speakers_path %>
+              <%= nav_link 'Location', location_path %>
+              <%= nav_link 'Sponsors', sponsors_path %>
+
+              <li class="dropdown hidden-phone hidden-tablet <%= maybe_add_active_to_about %>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><%= link_to 'Contact', contact_path %></li>
+                  <li><%= link_to 'Hotels', hotels_path %></li>
                   <li><%= link_to 'Privacy Policy', privacy_path %></li>
                   <li><%= link_to 'Code Of Conduct', code_of_conduct_path %></li>
                   <li><%= link_to 'Volunteer', volunteers_path %></li>
@@ -59,24 +56,56 @@
       </div>
     </div>
     <div class="container-fluid">
-      <%= render 'shared/cfp_banner' %>
       <div class="row-fluid">
         <div class="span9">
           <%= yield %>
         </div>
         <div class="span3">
-          <div class="well sidebar-nav" style="background-color: #333;">
-            <h3 class="sponsors text-center">Diamond Sponsor</h3>
-            <%= link_to(image_tag('logo_placeholder.png'), sponsorship_path) %>
+          <div class="well sidebar-nav text-center sponsor-logos" style="background-color: #333;">
+
+            <h3> Newsletter <h3>
+
+            <%= form_for @beta_request, class: 'form-inline' do |f| %>
+              <%= f.text_field :name, placeholder: "Name" %>
+              <%= f.text_field :email, placeholder: "Email" %><br>
+              <%= f.button 'Sign up for announcements', class: 'btn btn-primary' %>
+            <% end -%>
+
+            <p class="hidden-phone hidden-tablet"><a href="https://twitter.com/appseccali" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @appseccali</a></p>
+
             <div class="text-center sponsors">
+              <h2>Diamond Sponsor</h2>
+              <%= image_tag('sponsors/db-networks-logo.png') %>
               <h3>Platinum Sponsors</h3>
-              <%= image_tag('qualys.png') %>
-              <%= image_tag('sponsors-security-innovation.gif') %>
+              <%= image_tag('sponsors/qualys.png') %>
+              <%= image_tag('sponsors/SecurityInnovation.png') %>
               <h3>Gold Sponsors</h3>
-              <%= image_tag('sponsors-netspi.jpg') %>
-              <%= image_tag('sponsors-whitehat.jpg') %>
+              <%= image_tag('sponsors/accuvant.jpg') %>
+              <%= image_tag('sponsors/appsecconsulting.png') %>
+              <%= image_tag('sponsors/arxan.jpg') %>
+              <%= image_tag('sponsors/astech.jpg') %>
+              <%= image_tag('sponsors/brinqa.jpg') %>
+              <%= image_tag('sponsors/cenzic.gif') %>
+              <%= image_tag('sponsors/checkmarx.jpg') %>
+              <%= image_tag('sponsors/Good Logo_PMS485_RGB-jpg (1).png') %>
+              <%= image_tag('sponsors/netspi.jpg') %>
+              <%= image_tag('sponsors/nth.png') %>
+              <%= image_tag('sponsors/quotium.png') %>
+              <%= image_tag('sponsors/swamp.png') %>
+              <%= image_tag('sponsors/trustwave.jpg') %>
+              <%= image_tag('sponsors/whitehat.jpg') %>
+              <h3>Silver Sponsors</h3>
+              <%= image_tag('sponsors/cigital.jpg') %>
+              <%= image_tag('sponsors/contrast.jpg') %>
+              <%= image_tag('sponsors/enigmedia.jpg') %>
+              <%= image_tag('sponsors/gaikai.jpg') %>
+              <%= image_tag('sponsors/gold_150x45.png') %>
+              <%= image_tag('sponsors/imperva.png') %>
+              <h4>Misc Sponsors</h4>
+              <%= image_tag('sponsors/technical-connections.jpg', width: '193px') %>
+              <%= image_tag('sponsors/rackspace.jpg') %>
+              <%= image_tag('sponsors/Mandiant_logo_150x45.gif') %>
             </div>
-            <a class="twitter-timeline" href="https://twitter.com/AppSecCali" data-widget-id="374419775272673280">Tweets by @AppSecCali</a>
           </div><!--/.well -->
         </div><!--/span-->
       </div>
